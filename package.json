@@ -4,7 +4,8 @@
   "description": "Discover & upload your Scratch projects!",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "apicache": "^1.6.3",
