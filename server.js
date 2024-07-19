@@ -37,6 +37,7 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let APIdata = await response.json();
     a.title = APIdata.title;
     a.author = APIdata.author.username;
+    a.pfp = APIdata.author.profile.images['90x90'];
   }
 
   for (let i = 0; i < games.length; i++) {
@@ -47,6 +48,7 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let APIdata = await response.json();
     b.title = APIdata.title;
     b.author = APIdata.author.username;
+    b.pfp = APIdata.author.profile.images['90x90'];
   }
 
   for (let i = 0; i < music.length; i++) {
@@ -57,6 +59,7 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let APIdata = await response.json();
     c.title = APIdata.title;
     c.author = APIdata.author.username;
+    c.pfp = APIdata.author.profile.images['90x90'];
   }
 
   res.render("index", { recent, games, music });
