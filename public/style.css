@@ -57,6 +57,7 @@ select:focus {
 input,
 button {
   color: black;
+  border: 0;
 }
 
 h1 {

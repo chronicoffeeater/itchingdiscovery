@@ -69,6 +69,10 @@ app.get("/add", (req, res) => {
   res.render("add", { tagsPrimary, tagsSecondary });
 });
 
+app.post("/search", async function (req, res) {
+  res.send(await search(req.query.type, req.query.q));
+});
+
 app.post("/add", async function (req, res) {
   const projectLink = req.body.projectLink;
   const tagOne = req.body.tag1;
@@ -157,6 +161,34 @@ async function validateProject(projStr) {
     return 4;
   } else {
     return 1;
+  }
+}
+
+async function search(type, query) {
+  let queryMatch = [];
+  
+  if (type == '1') {
+    for (let i = 0; i < projects.length; i++) {
+      let a = projects[i];
+      let response = await fetch("https://api.scratch.mit.edu/projects/" + a.id);
+      let APIdata = await response.json();
+
+      if (a.title.includes(query)) {
+        a.title = APIdata.title;
+        a.author = APIdata.author.username;
+        a.pfp = APIdata.author.profile.images["90x90"];
+
+        queryMatch.unshift(a);
+      }
+    }
+    
+    return {error: false, queryMatch}
+  }else if (type == '2') {
+    queryMatch = projects.filter(a => a.tags.includes(query));
+    
+    return {error: false, queryMatch}
+  }else{
+    return {error: 'Invalid search type!', queryMatch}
   }
 }
 
