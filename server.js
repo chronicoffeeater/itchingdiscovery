@@ -88,6 +88,10 @@ app.post("/add", (req, res) => {
       return res.render("rejected.ejs", {
         err: "it must be shared for more than two days.",
       });
+    if (validateResult == 7)
+      return res.render("rejected.ejs", {
+        err: "it must already have a few views.",
+      });
 
     res.render("error.ejs", {
       err: "Unknown Reason. Comment on @i_eat_coffee's profile for info.",
@@ -114,6 +118,10 @@ function validateProject(projStr) {
       2
     ) {
       return 6;
+    }
+
+    if (x.stats.views < 15) {
+      return 7;
     }
 
     if (projects.some((project) => project.id === projStr.split("/")[4]))
