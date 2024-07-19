@@ -26,6 +26,8 @@ app.set("view engine", "ejs");
 
 app.get("/", cache("5 minutes"), async function (req, res) {
   let recent = projects.slice(-4).reverse();
+  let games = projects.filter(proj => proj.tags[0] == 'games').slice(-4).reverse();
+  let music = projects.filter(proj => proj.tags[0] == 'music').slice(-4).reverse();
 
   for (let i = 0; i < recent.length; i++) {
     let a = recent[i];
@@ -37,7 +39,27 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     a.author = APIdata.author.username;
   }
 
-  res.render("index", { recent });
+  for (let i = 0; i < games.length; i++) {
+    let b = games[i];
+    let response = await fetch(
+      "https://api.scratch.mit.edu/projects/" + b.id
+    );
+    let APIdata = await response.json();
+    b.title = APIdata.title;
+    b.author = APIdata.author.username;
+  }
+
+  for (let i = 0; i < music.length; i++) {
+    let c = music[i];
+    let response = await fetch(
+      "https://api.scratch.mit.edu/projects/" + c.id
+    );
+    let APIdata = await response.json();
+    c.title = APIdata.title;
+    c.author = APIdata.author.username;
+  }
+
+  res.render("index", { recent, games, music });
 });
 
 app.get("/add", (req, res) => {
