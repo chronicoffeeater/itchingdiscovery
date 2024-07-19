@@ -7,10 +7,10 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "apicache": "^1.6.3",
+    "body-parser": "^1.20.2",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
-    "body-parser": "^1.20.2",
-    "sync-fetch": "^0.5.2",
-    "apicache": "^1.6.3"
+    "node-fetch": "^2.7.0"
   }
 }

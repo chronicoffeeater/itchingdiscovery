@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const fetch = require("sync-fetch");
+const fetch = require("node-fetch");
 const fs = require("fs");
 
 let tagsPrimary = require("./tags.js").tags[0];
@@ -29,9 +29,10 @@ app.get("/", cache("5 minutes"), async function (req, res) {
 
   for (let i = 0; i < recent.length; i++) {
     let a = recent[i];
-    let APIdata = await fetch(
+    let response = await fetch(
       "https://api.scratch.mit.edu/projects/" + a.id
-    ).json();
+    );
+    let APIdata = await response.json();
     a.title = APIdata.title;
     a.author = APIdata.author.username;
   }
@@ -43,7 +44,7 @@ app.get("/add", (req, res) => {
   res.render("add", { tagsPrimary, tagsSecondary });
 });
 
-app.post("/add", (req, res) => {
+app.post("/add", async function (req, res) {
   const projectLink = req.body.projectLink;
   const tagOne = req.body.tag1;
   const tagTwo = req.body.tag2;
@@ -52,7 +53,7 @@ app.post("/add", (req, res) => {
     return res.send("Selected tags don't match the server array(s).");
   }
 
-  let validateResult = validateProject(projectLink);
+  let validateResult = await validateProject(projectLink);
 
   if (validateResult == 4) {
     const projectId = projectLink.split("/")[4];
@@ -99,12 +100,13 @@ app.post("/add", (req, res) => {
   }
 });
 
-function validateProject(projStr) {
+async function validateProject(projStr) {
   if (
     projStr.startsWith("https://scratch.mit.edu/projects/") &&
     /^\d{6,11}$/.test(projStr.split("/")[4])
   ) {
-    let x = fetch("https://api." + projStr.slice(8)).json();
+    let response = await fetch("https://api." + projStr.slice(8))
+    let x = await response.json();
     if (x.code == "NotFound") {
       return 2;
     }
