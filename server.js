@@ -26,40 +26,40 @@ app.set("view engine", "ejs");
 
 app.get("/", cache("5 minutes"), async function (req, res) {
   let recent = projects.slice(-5).reverse();
-  let games = projects.filter(proj => proj.tags[0] == 'games').slice(-5).reverse();
-  let music = projects.filter(proj => proj.tags[0] == 'music').slice(-5).reverse();
+  let games = projects
+    .filter((proj) => proj.tags[0] == "games")
+    .slice(-5)
+    .reverse();
+  let music = projects
+    .filter((proj) => proj.tags[0] == "music")
+    .slice(-5)
+    .reverse();
 
   for (let i = 0; i < recent.length; i++) {
     let a = recent[i];
-    let response = await fetch(
-      "https://api.scratch.mit.edu/projects/" + a.id
-    );
+    let response = await fetch("https://api.scratch.mit.edu/projects/" + a.id);
     let APIdata = await response.json();
     a.title = APIdata.title;
     a.author = APIdata.author.username;
-    a.pfp = APIdata.author.profile.images['90x90'];
+    a.pfp = APIdata.author.profile.images["90x90"];
   }
 
   for (let i = 0; i < games.length; i++) {
     let b = games[i];
-    let response = await fetch(
-      "https://api.scratch.mit.edu/projects/" + b.id
-    );
+    let response = await fetch("https://api.scratch.mit.edu/projects/" + b.id);
     let APIdata = await response.json();
     b.title = APIdata.title;
     b.author = APIdata.author.username;
-    b.pfp = APIdata.author.profile.images['90x90'];
+    b.pfp = APIdata.author.profile.images["90x90"];
   }
 
   for (let i = 0; i < music.length; i++) {
     let c = music[i];
-    let response = await fetch(
-      "https://api.scratch.mit.edu/projects/" + c.id
-    );
+    let response = await fetch("https://api.scratch.mit.edu/projects/" + c.id);
     let APIdata = await response.json();
     c.title = APIdata.title;
     c.author = APIdata.author.username;
-    c.pfp = APIdata.author.profile.images['90x90'];
+    c.pfp = APIdata.author.profile.images["90x90"];
   }
 
   res.render("index", { recent, games, music });
@@ -130,7 +130,7 @@ async function validateProject(projStr) {
     projStr.startsWith("https://scratch.mit.edu/projects/") &&
     /^\d{6,11}$/.test(projStr.split("/")[4])
   ) {
-    let response = await fetch("https://api." + projStr.slice(8))
+    let response = await fetch("https://api." + projStr.slice(8));
     let x = await response.json();
     if (x.code == "NotFound") {
       return 2;
@@ -159,7 +159,6 @@ async function validateProject(projStr) {
     return 1;
   }
 }
-
 
 // 404
 app.get("/*", function (req, res) {
