@@ -25,9 +25,9 @@ let cache = apicache.middleware;
 app.set("view engine", "ejs");
 
 app.get("/", cache("5 minutes"), async function (req, res) {
-  let recent = projects.slice(-4).reverse();
-  let games = projects.filter(proj => proj.tags[0] == 'games').slice(-4).reverse();
-  let music = projects.filter(proj => proj.tags[0] == 'music').slice(-4).reverse();
+  let recent = projects.slice(-5).reverse();
+  let games = projects.filter(proj => proj.tags[0] == 'games').slice(-5).reverse();
+  let music = projects.filter(proj => proj.tags[0] == 'music').slice(-5).reverse();
 
   for (let i = 0; i < recent.length; i++) {
     let a = recent[i];
