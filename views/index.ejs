@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scratch Projects</title>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/projects.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/add">Add Project</a>
+    </nav>
+  
+    <div class="section">
+      <h1>Recently Added</h1>
+      <ul>
+          <% recent.forEach(project => { %>
+              <li class="project">
+                  <a href="<%= project.link %>">
+                    <img class="thumbnail" src="https://uploads.scratch.mit.edu/get_image/project/<%= project.id %>_480x360.png" />
+                  </a>
+                  <br/>
+                  <b><%= project.title.length > 15 ? project.title.slice(0,13)+'...' : project.title %></b>
+                  <br/>
+                  Tags: <%= project.tags[0] %>, <%= project.tags[1] %>
+                  <br/>
+                  <span style="font-size: 70%">
+                    By: <a href="https://scratch.mit.edu/users/<%= project.author %>/"><%= project.author %></a>
+                  </span>
+              </li>
+          <% }) %>
+      </ul>
+    </div>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Scratch Project</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/add">Add Project</a>
+    </nav>
+    <h1>Add a Scratch Project</h1>
+    <form action="/add" method="POST">
+        <label for="projectLink">Project Link:</label>
+        <input type="text" name="projectLink" autocomplete="off" placeholder="https://scratch.mit.edu/projects/874345976/" required>
+        
+        <label for="tag1">Primary Tag:</label>
+        <select name="tag1" required>
+            <% tagsPrimary.forEach(tag => { %>
+                <option value="<%= tag %>"><%= tag %></option>
+            <% }) %>
+        </select>
+                  
+        <label for="tag2">Secondary tag:</label>
+        <select name="tag2" required>
+            <% tagsSecondary.forEach(tag => { %>
+                <option value="<%= tag %>"><%= tag %></option>
+            <% }) %>
+          <option disabled>If a tag's missing, let @i_eat_coffee know.</option>
+          <option disabled>Do not select a random tag!</option>
+        </select>
+        <br/>
+        <button type="submit">Add Project</button>
+    </form>
+</body>
+</html>
