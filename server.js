@@ -151,7 +151,7 @@ async function validateProject(projStr) {
       return 6;
     }
 
-    if (x.stats.views < 9) {
+    if (x.stats.views < 10) {
       return 7;
     }
 
