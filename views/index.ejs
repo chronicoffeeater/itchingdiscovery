@@ -37,7 +37,7 @@
     <div class="section">
       <h1>Recent Games</h1>
       <ul>
-          <% recent.forEach(project => { %>
+          <% games.forEach(project => { %>
               <li class="project">
                   <a href="<%= project.link %>">
                     <img class="thumbnail" src="https://uploads.scratch.mit.edu/get_image/project/<%= project.id %>_480x360.png" />
@@ -58,7 +58,7 @@
     <div class="section">
       <h1>Recent Music</h1>
       <ul>
-          <% recent.forEach(project => { %>
+          <% music.forEach(project => { %>
               <li class="project">
                   <a href="<%= project.link %>">
                     <img class="thumbnail" src="https://uploads.scratch.mit.edu/get_image/project/<%= project.id %>_480x360.png" />
