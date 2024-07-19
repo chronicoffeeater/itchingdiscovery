@@ -39,6 +39,17 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let a = recent[i];
     let response = await fetch("https://api.scratch.mit.edu/projects/" + a.id);
     let APIdata = await response.json();
+
+    if (a.code == 'NotFound') {
+      /* delete the project from db
+      fs.writeFileSync(
+        "projects.json",
+        JSON.stringify({ list: projects }, null, 2)
+      );
+      apicache.clear('/');
+      return res.send(`<script>window.location.reload();</script>`); */
+      continue;
+    }
     a.title = APIdata.title;
     a.author = APIdata.author.username;
     a.pfp = APIdata.author.profile.images["90x90"];
@@ -48,6 +59,16 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let b = games[i];
     let response = await fetch("https://api.scratch.mit.edu/projects/" + b.id);
     let APIdata = await response.json();
+    if (b.code == 'NotFound') {
+      /* delete the project from db
+      fs.writeFileSync(
+        "projects.json",
+        JSON.stringify({ list: projects }, null, 2)
+      );
+      apicache.clear('/');
+      return res.send(`<script>window.location.reload();</script>`); */
+      continue;
+    }
     b.title = APIdata.title;
     b.author = APIdata.author.username;
     b.pfp = APIdata.author.profile.images["90x90"];
@@ -57,6 +78,16 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let c = music[i];
     let response = await fetch("https://api.scratch.mit.edu/projects/" + c.id);
     let APIdata = await response.json();
+    if (c.code == 'NotFound') {
+      /* delete the project from db
+      fs.writeFileSync(
+        "projects.json",
+        JSON.stringify({ list: projects }, null, 2)
+      );
+      apicache.clear('/');
+      return res.send(`<script>window.location.reload();</script>`); */
+      continue;
+    }
     c.title = APIdata.title;
     c.author = APIdata.author.username;
     c.pfp = APIdata.author.profile.images["90x90"];
