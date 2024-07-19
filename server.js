@@ -26,7 +26,7 @@ app.set("view engine", "ejs");
 
 app.get("/", cache("5 minutes"), async function (req, res) {
   let recent = projects.slice(-4).reverse();
-  
+
   for (let i = 0; i < recent.length; i++) {
     let a = recent[i];
     let APIdata = await fetch(
