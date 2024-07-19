@@ -120,7 +120,7 @@ app.post("/add", async function (req, res) {
       });
     if (validateResult == 7)
       return res.render("rejected.ejs", {
-        err: "it must already have a few views.",
+        err: "the minimum view count is 10 (in order to prevent abuse).",
       });
 
     res.render("error.ejs", {
@@ -151,7 +151,7 @@ async function validateProject(projStr) {
       return 6;
     }
 
-    if (x.stats.views < 15) {
+    if (x.stats.views < 9) {
       return 7;
     }
 
