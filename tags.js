@@ -29,6 +29,7 @@ const tagsSecondary = [
   "emulator",
   "video",
   "funny",
+  "programming",
   "drawing",
 ].sort();
 
