@@ -68,6 +68,9 @@ h1 {
 ul {
   list-style-type: none;
   padding: 0;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
 }
 
 li {

@@ -7,7 +7,7 @@
 }
 
 .project {
-    display: inline-block;
+    display: table-cell;
     baseline-source: first;
     transition: 0.2s;
     width: 160px;
@@ -17,6 +17,12 @@
 .project a {
 /*     color: inherit; */
     text-decoration: none;
+    position: relative;
+}
+
+.project span:has(a img) {
+    position: absolute;
+    bottom: 10px;
 }
 
 .project:hover {
@@ -28,6 +34,6 @@
   height: 20px;
   border-radius: 3px;
   vertical-align: middle;
-  position: absolute;
+  position: relative;
   margin-left: 5px;
 }
