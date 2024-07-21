@@ -20,11 +20,6 @@
     position: relative;
 }
 
-.project span:has(a img) {
-    position: absolute;
-    bottom: 10px;
-}
-
 .project:hover {
     filter: brightness(0.9);
 }
@@ -34,6 +29,5 @@
   height: 20px;
   border-radius: 3px;
   vertical-align: middle;
-  position: relative;
   margin-left: 5px;
 }
