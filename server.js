@@ -100,6 +100,10 @@ app.get("/add", (req, res) => {
   res.render("add", { tagsPrimary, tagsSecondary });
 });
 
+app.post("/admintest", function (req, res) {
+  if (req.body.admin == process.env.admin) { return { admin: true } }else{ return { admin: false } }
+});
+
 app.post("/search", async function (req, res) {
   res.send(await search(req.query.type, req.query.q));
 });
