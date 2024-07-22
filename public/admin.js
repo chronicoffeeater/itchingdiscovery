@@ -1,4 +1,15 @@
-const isAdmin = true;
+fetch("/admintests",
+{
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: "POST",
+    body: JSON.stringify({admin: localStorage.getItem('adminkey') })
+})
+.then(res => res.json())
+.then(data => {
+    let isAdmin = data.admin;
 
 if (isAdmin) {
     createAdminPanel();
@@ -72,3 +83,5 @@ function makeDraggable(dragElement, moveElement) {
         document.removeEventListener('mouseup', stopDrag);
     }
 }
+
+});
