@@ -60,7 +60,7 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let b = games[i];
     let response = await fetch("https://api.scratch.mit.edu/projects/" + b.id);
     let APIdata = await response.json();
-    if (b.code == 'NotFound') {
+    if (APIdata.code == 'NotFound') {
       /* delete the project from db
       fs.writeFileSync(
         "projects.json",
@@ -79,7 +79,7 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let c = music[i];
     let response = await fetch("https://api.scratch.mit.edu/projects/" + c.id);
     let APIdata = await response.json();
-    if (c.code == 'NotFound') {
+    if (APIdata.code == 'NotFound') {
       /* delete the project from db
       fs.writeFileSync(
         "projects.json",
