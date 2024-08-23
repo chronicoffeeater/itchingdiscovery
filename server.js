@@ -42,14 +42,14 @@ app.get("/", cache("5 minutes"), async function (req, res) {
       let response = await fetch("https://api.scratch.mit.edu/projects/" + a.id);
       let APIdata = await response.json();
       if (APIdata.code == 'NotFound') {
-        /* delete the project from db
+        // delete the project from db
+        projects = projects.filter(project => project.id != a.id);
         fs.writeFileSync(
           "projects.json",
           JSON.stringify({ list: projects }, null, 2)
         );
         apicache.clear('/');
-        return res.send(`<script>window.location.reload();</script>`); */
-        continue;
+        return res.send(`<script>window.location.reload();</script>`);
       }
       a.title = APIdata.title;
       a.author = APIdata.author.username;
@@ -61,14 +61,14 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let response = await fetch("https://api.scratch.mit.edu/projects/" + b.id);
     let APIdata = await response.json();
     if (APIdata.code == 'NotFound') {
-      /* delete the project from db
-      fs.writeFileSync(
-        "projects.json",
-        JSON.stringify({ list: projects }, null, 2)
-      );
-      apicache.clear('/');
-      return res.send(`<script>window.location.reload();</script>`); */
-      continue;
+        // delete the project from db
+        projects = projects.filter(project => project.id != b.id);
+        fs.writeFileSync(
+          "projects.json",
+          JSON.stringify({ list: projects }, null, 2)
+        );
+        apicache.clear('/');
+        return res.send(`<script>window.location.reload();</script>`);
     }
     b.title = APIdata.title;
     b.author = APIdata.author.username;
@@ -80,14 +80,14 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     let response = await fetch("https://api.scratch.mit.edu/projects/" + c.id);
     let APIdata = await response.json();
     if (APIdata.code == 'NotFound') {
-      /* delete the project from db
-      fs.writeFileSync(
-        "projects.json",
-        JSON.stringify({ list: projects }, null, 2)
-      );
-      apicache.clear('/');
-      return res.send(`<script>window.location.reload();</script>`); */
-      continue;
+        // delete the project from db
+        projects = projects.filter(project => project.id != c.id);
+        fs.writeFileSync(
+          "projects.json",
+          JSON.stringify({ list: projects }, null, 2)
+        );
+        apicache.clear('/');
+        return res.send(`<script>window.location.reload();</script>`);
     }
     c.title = APIdata.title;
     c.author = APIdata.author.username;
