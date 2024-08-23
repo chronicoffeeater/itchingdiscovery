@@ -12,7 +12,7 @@ app.use(express.static("public"));
 
 // Load projects from the file
 let projects = [];
-console.log(fs.readFileSync("projects.json", "utf8"));
+// console.log(fs.readFileSync("projects.json", "utf8"));
 if (fs.existsSync("projects.json")) {
   projects = JSON.parse(fs.readFileSync("projects.json", "utf8")).list;
 }
@@ -25,6 +25,8 @@ let cache = apicache.middleware;
 app.set("view engine", "ejs");
 
 app.get("/", cache("5 minutes"), async function (req, res) {
+  
+  try {
   let recent = projects.slice(-5).reverse();
   let games = projects
     .filter((proj) => proj.tags[0] == "games")
@@ -36,23 +38,22 @@ app.get("/", cache("5 minutes"), async function (req, res) {
     .reverse();
 
   for (let i = 0; i < recent.length; i++) {
-    let a = recent[i];
-    let response = await fetch("https://api.scratch.mit.edu/projects/" + a.id);
-    let APIdata = await response.json();
-
-    if (a.code == 'NotFound') {
-      /* delete the project from db
-      fs.writeFileSync(
-        "projects.json",
-        JSON.stringify({ list: projects }, null, 2)
-      );
-      apicache.clear('/');
-      return res.send(`<script>window.location.reload();</script>`); */
-      continue;
-    }
-    a.title = APIdata.title;
-    a.author = APIdata.author.username;
-    a.pfp = APIdata.author.profile.images["90x90"];
+      let a = recent[i];
+      let response = await fetch("https://api.scratch.mit.edu/projects/" + a.id);
+      let APIdata = await response.json();
+      if (APIdata.code == 'NotFound') {
+        /* delete the project from db
+        fs.writeFileSync(
+          "projects.json",
+          JSON.stringify({ list: projects }, null, 2)
+        );
+        apicache.clear('/');
+        return res.send(`<script>window.location.reload();</script>`); */
+        continue;
+      }
+      a.title = APIdata.title;
+      a.author = APIdata.author.username;
+      a.pfp = APIdata.author.profile.images["90x90"];
   }
 
   for (let i = 0; i < games.length; i++) {
@@ -94,6 +95,10 @@ app.get("/", cache("5 minutes"), async function (req, res) {
   }
 
   res.render("index", { recent, games, music });
+    
+  }catch(e){
+    res.status(500).render("err", {err: e})
+  }
 });
 
 app.get("/add", (req, res) => {
@@ -222,6 +227,17 @@ async function search(type, query) {
     return {error: 'Invalid search type!', queryMatch}
   }
 }
+
+// 500
+app.get("/500", function (req, res) {
+  res.status(500).render("err", {err: `Uncaught ReferenceError: You didn't follow @i_eat_coffee yet
+    at <anonymous>:1:1`});
+});
+
+// 403
+app.get("/403", function (req, res) {
+  res.status(403).render("403");
+});
 
 // 404
 app.get("/*", function (req, res) {
