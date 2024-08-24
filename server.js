@@ -8,6 +8,7 @@ let tagsSecondary = require("./tags.js").tags[1];
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static("public"));
 
 // Load projects from the file
@@ -163,6 +164,22 @@ app.post("/add", async function (req, res) {
       err: "Unknown Reason. Comment on @i_eat_coffee's profile for info.",
     });
   }
+});
+
+app.post('/admin/remove', function (req, res) {
+  console.log(req.body);
+  let projId = req.body.url.split("/")[4];
+  let password = req.body.pass;
+  if (password !== process.env.pass) return res.status(500).render('err');
+  
+        projects = projects.filter(project => project.id != projId);
+        fs.writeFileSync(
+          "projects.json",
+          JSON.stringify({ list: projects }, null, 2)
+        );
+  
+        apicache.clear('/');
+        return res.send(`<script>window.location.href = '/';</script>`);
 });
 
 async function validateProject(projStr) {
